@@ -16,6 +16,7 @@ npm run test:watch # run tests in watch mode
 | 001 | [Merge Sorted Array](#001-merge-sorted-array)                                   | Easy       | [Code](src/001-merge-sorted-array/merge-sorted-array.ts)                                   |
 | 002 | [Remove Element](#002-remove-element)                                           | Easy       | [Code](src/002-remove-element/remove-element.ts)                                           |
 | 003 | [Remove Duplicates from Sorted Array](#003-remove-duplicates-from-sorted-array) | Easy       | [Code](src/003-remove-duplicates-from-sorted-array/remove-duplicates-from-sorted-array.ts) |
+| 004 | [Remove Duplicates from Sorted Array II](#004-remove-duplicates-from-sorted-array-ii) | Medium | [Code](src/004-remove-duplicates-from-sorted-array-ii/remove-duplicates-from-sorted-array-ii.ts) |
 
 ---
 
@@ -86,6 +87,34 @@ const removeDuplicates = (nums: number[]): number => {
 
   for (let i: number = 1; i < nums.length; i++) {
     if (nums[i] !== nums[k - 1]) {
+      nums[k] = nums[i];
+      k++;
+    }
+  }
+
+  return k;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — in-place with a write pointer.
+
+---
+
+### 004. Remove Duplicates from Sorted Array II
+
+Remove duplicates in-place from a sorted array so each element appears at most twice. Return the count of remaining elements.
+
+```typescript
+const removeDuplicatesII = (nums: number[]): number => {
+  if (nums.length <= 2) {
+    return nums.length;
+  }
+
+  let k: number = 2;
+
+  for (let i: number = 2; i < nums.length; i++) {
+    if (nums[i] !== nums[k - 2]) {
       nums[k] = nums[i];
       k++;
     }
