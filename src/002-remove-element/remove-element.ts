@@ -1,3 +1,4 @@
+// Two Pointers (read/write)
 const removeElement = (nums: number[], val: number): number => {
   let k: number = 0;
 

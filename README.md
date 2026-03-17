@@ -11,12 +11,13 @@ npm run test:watch # run tests in watch mode
 
 ## Riddles
 
-| #   | Problem                                                                         | Difficulty | Solution                                                                                   |
-| --- | ------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------ |
-| 001 | [Merge Sorted Array](#001-merge-sorted-array)                                   | Easy       | [Code](src/001-merge-sorted-array/merge-sorted-array.ts)                                   |
-| 002 | [Remove Element](#002-remove-element)                                           | Easy       | [Code](src/002-remove-element/remove-element.ts)                                           |
-| 003 | [Remove Duplicates from Sorted Array](#003-remove-duplicates-from-sorted-array) | Easy       | [Code](src/003-remove-duplicates-from-sorted-array/remove-duplicates-from-sorted-array.ts) |
-| 004 | [Remove Duplicates from Sorted Array II](#004-remove-duplicates-from-sorted-array-ii) | Medium | [Code](src/004-remove-duplicates-from-sorted-array-ii/remove-duplicates-from-sorted-array-ii.ts) |
+| #   | Problem | Difficulty | Algorithm | Solution |
+| --- | ------- | ---------- | --------- | -------- |
+| 001 | [Merge Sorted Array](#001-merge-sorted-array) | Easy | Three Pointers (from end) | [Code](src/001-merge-sorted-array/merge-sorted-array.ts) |
+| 002 | [Remove Element](#002-remove-element) | Easy | Two Pointers (read/write) | [Code](src/002-remove-element/remove-element.ts) |
+| 003 | [Remove Duplicates from Sorted Array](#003-remove-duplicates-from-sorted-array) | Easy | Two Pointers (read/write) | [Code](src/003-remove-duplicates-from-sorted-array/remove-duplicates-from-sorted-array.ts) |
+| 004 | [Remove Duplicates from Sorted Array II](#004-remove-duplicates-from-sorted-array-ii) | Medium | Two Pointers (read/write) | [Code](src/004-remove-duplicates-from-sorted-array-ii/remove-duplicates-from-sorted-array-ii.ts) |
+| 005 | [Majority Element](#005-majority-element) | Easy | Boyer-Moore Voting | [Code](src/005-majority-element/majority-element.ts) |
 
 ---
 
@@ -126,3 +127,32 @@ const removeDuplicatesII = (nums: number[]): number => {
 
 **Time complexity:** O(n) — single pass through the array.
 **Space complexity:** O(1) — in-place with a write pointer.
+
+---
+
+### 005. Majority Element
+
+Return the element that appears more than `⌊n / 2⌋` times using Boyer-Moore Voting Algorithm.
+
+```typescript
+const majorityElement = (nums: number[]): number => {
+  let el: number = nums[0];
+  let k: number = 1;
+
+  for (let i: number = 1; i < nums.length; i++) {
+    if (el === nums[i]) {
+      k++;
+    } else if (k === 0) {
+      el = nums[i];
+      k = 1;
+    } else {
+      k--;
+    }
+  }
+
+  return el;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — no extra data structures.

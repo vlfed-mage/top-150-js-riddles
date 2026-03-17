@@ -1,3 +1,4 @@
+// Two Pointers (read/write)
 const removeDuplicates = (nums: number[]): number => {
   let k: number = 1;
 

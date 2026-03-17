@@ -1,3 +1,4 @@
+// Three Pointers (from end)
 const mergeSortedArray = (
   nums1: number[],
   m: number,
