@@ -20,6 +20,9 @@ npm run test:watch # run tests in watch mode
 | 005 | [Majority Element](#005-majority-element) | Easy | Boyer-Moore Voting | [Code](src/005-majority-element/majority-element.ts) |
 | 006 | [Rotate Array](#006-rotate-array) | Medium | Reverse Three Times | [Code](src/006-rotate-array/rotate-array.ts) |
 | 007 | [Best Time to Buy and Sell Stock](#007-best-time-to-buy-and-sell-stock) | Easy | Greedy (track min price) | [Code](src/007-best-time-to-buy-and-sell-stock/best-time-to-buy-and-sell-stock.ts) |
+| 008 | [Best Time to Buy and Sell Stock II](#008-best-time-to-buy-and-sell-stock-ii) | Medium | Greedy (collect every uphill) | [Code](src/008-best-time-to-buy-and-sell-stock-ii/best-time-to-buy-and-sell-stock-ii.ts) |
+| 009 | [Jump Game](#009-jump-game) | Medium | Greedy (max reachable index) | [Code](src/009-jump-game/jump-game.ts) |
+| 010 | [Jump Game II](#010-jump-game-ii) | Medium | Greedy (BFS-like level expansion) | [Code](src/010-jump-game-ii/jump-game-ii.ts) |
 
 ---
 
@@ -213,3 +216,80 @@ const maxProfit = (prices: number[]): number => {
 
 **Time complexity:** O(n) — single pass through the array.
 **Space complexity:** O(1) — two variables only.
+
+---
+
+### 008. Best Time to Buy and Sell Stock II
+
+Maximize profit with unlimited transactions by collecting every consecutive price increase.
+
+```typescript
+// Greedy (collect every uphill)
+const maxProfitII = (prices: number[]): number => {
+  let profit: number = 0;
+
+  for (let i: number = 1; i < prices.length; i++) {
+    if (prices[i] > prices[i - 1]) {
+      profit += prices[i] - prices[i - 1];
+    }
+  }
+
+  return profit;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — one variable only.
+
+---
+
+### 009. Jump Game
+
+Determine if you can reach the last index by tracking the farthest reachable position.
+
+```typescript
+// Greedy (track max reachable index)
+const canJump = (nums: number[]): boolean => {
+  let maxJump: number = 0;
+
+  for (let i: number = 0; i < nums.length; i++) {
+    if (maxJump >= nums.length - 1) return true;
+    if (i > maxJump) return false;
+    maxJump = Math.max(maxJump, i + nums[i]);
+  }
+
+  return true;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — one variable only.
+
+---
+
+### 010. Jump Game II
+
+Find the minimum number of jumps to reach the last index using BFS-like level expansion.
+
+```typescript
+// Greedy (BFS-like level expansion)
+const jump = (nums: number[]): number => {
+  let jumps: number = 0;
+  let maxReach: number = 0;
+  let currentEnd: number = 0;
+
+  for (let i: number = 0; i < nums.length - 1; i++) {
+    maxReach = Math.max(maxReach, i + nums[i]);
+
+    if (i === currentEnd) {
+      currentEnd = maxReach;
+      jumps++;
+    }
+  }
+
+  return jumps;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — three variables only.
