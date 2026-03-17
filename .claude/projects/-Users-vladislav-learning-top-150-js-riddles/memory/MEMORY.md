@@ -1,0 +1,1 @@
+- [feedback_short_var_names.md](feedback_short_var_names.md) - Prefer short variable names (p1, p2, wp) in algorithm solutions
