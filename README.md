@@ -18,6 +18,7 @@ npm run test:watch # run tests in watch mode
 | 003 | [Remove Duplicates from Sorted Array](#003-remove-duplicates-from-sorted-array) | Easy | Two Pointers (read/write) | [Code](src/003-remove-duplicates-from-sorted-array/remove-duplicates-from-sorted-array.ts) |
 | 004 | [Remove Duplicates from Sorted Array II](#004-remove-duplicates-from-sorted-array-ii) | Medium | Two Pointers (read/write) | [Code](src/004-remove-duplicates-from-sorted-array-ii/remove-duplicates-from-sorted-array-ii.ts) |
 | 005 | [Majority Element](#005-majority-element) | Easy | Boyer-Moore Voting | [Code](src/005-majority-element/majority-element.ts) |
+| 006 | [Rotate Array](#006-rotate-array) | Medium | Reverse Three Times | [Code](src/006-rotate-array/rotate-array.ts) |
 
 ---
 
@@ -156,3 +157,31 @@ const majorityElement = (nums: number[]): number => {
 
 **Time complexity:** O(n) — single pass through the array.
 **Space complexity:** O(1) — no extra data structures.
+
+---
+
+### 006. Rotate Array
+
+Rotate the array to the right by `k` steps in-place using three reversals.
+
+```typescript
+// Reverse Three Times
+const reverse = (nums: number[], left: number, right: number): void => {
+  while (left < right) {
+    [nums[left], nums[right]] = [nums[right], nums[left]];
+    left++;
+    right--;
+  }
+};
+
+const rotateArray = (nums: number[], k: number): void => {
+  const step: number = k % nums.length;
+
+  reverse(nums, 0, nums.length - 1);
+  reverse(nums, 0, step - 1);
+  reverse(nums, step, nums.length - 1);
+};
+```
+
+**Time complexity:** O(n) — each element is reversed twice.
+**Space complexity:** O(1) — in-place swaps only.
