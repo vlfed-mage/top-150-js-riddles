@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import mergeSortedArray from './merge-sorted-array';
 
+// in-place mutation — assert the modified array
 describe('mergeSortedArray', () => {
   it('should merge two sorted arrays', () => {
     const nums1: number[] = [1, 2, 3, 0, 0, 0];

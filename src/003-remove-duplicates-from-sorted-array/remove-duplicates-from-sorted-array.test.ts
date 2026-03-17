@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import removeDuplicates from './remove-duplicates-from-sorted-array';
 
+// in-place mutation — assert return value + modified array
 describe('removeDuplicates', () => {
   it('should remove duplicates from [1,1,2]', () => {
     const nums: number[] = [1, 1, 2];

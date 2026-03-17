@@ -19,6 +19,7 @@ npm run test:watch # run tests in watch mode
 | 004 | [Remove Duplicates from Sorted Array II](#004-remove-duplicates-from-sorted-array-ii) | Medium | Two Pointers (read/write) | [Code](src/004-remove-duplicates-from-sorted-array-ii/remove-duplicates-from-sorted-array-ii.ts) |
 | 005 | [Majority Element](#005-majority-element) | Easy | Boyer-Moore Voting | [Code](src/005-majority-element/majority-element.ts) |
 | 006 | [Rotate Array](#006-rotate-array) | Medium | Reverse Three Times | [Code](src/006-rotate-array/rotate-array.ts) |
+| 007 | [Best Time to Buy and Sell Stock](#007-best-time-to-buy-and-sell-stock) | Easy | Greedy (track min price) | [Code](src/007-best-time-to-buy-and-sell-stock/best-time-to-buy-and-sell-stock.ts) |
 
 ---
 
@@ -185,3 +186,30 @@ const rotateArray = (nums: number[], k: number): void => {
 
 **Time complexity:** O(n) — each element is reversed twice.
 **Space complexity:** O(1) — in-place swaps only.
+
+---
+
+### 007. Best Time to Buy and Sell Stock
+
+Find the maximum profit from a single buy-sell transaction by tracking the minimum price seen so far.
+
+```typescript
+// Greedy (track min price)
+const maxProfit = (prices: number[]): number => {
+  let min: number = prices[0];
+  let profit: number = 0;
+
+  for (let i: number = 1; i < prices.length; i++) {
+    if (prices[i] < min) {
+      min = prices[i];
+    } else {
+      profit = Math.max(profit, prices[i] - min);
+    }
+  }
+
+  return profit;
+};
+```
+
+**Time complexity:** O(n) — single pass through the array.
+**Space complexity:** O(1) — two variables only.

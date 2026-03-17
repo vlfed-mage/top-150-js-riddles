@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import majorityElement from './majority-element';
 
+// pure return value — assert the result directly
 describe('majorityElement', () => {
   it('should return 3 for [3,2,3]', () => {
     expect(majorityElement([3, 2, 3])).toBe(3);

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import removeElement from './remove-element';
 
+// in-place mutation — assert return value + modified array
 describe('removeElement', () => {
   it('should remove all occurrences of val', () => {
     const nums: number[] = [3, 2, 2, 3];

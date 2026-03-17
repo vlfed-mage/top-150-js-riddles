@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import rotateArray from './rotate-array';
 
+// in-place mutation — assert the modified array
 describe('rotateArray', () => {
   it('should rotate by 3 steps', () => {
     const nums: number[] = [1, 2, 3, 4, 5, 6, 7];
