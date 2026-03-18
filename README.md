@@ -32,6 +32,7 @@ npm run test:watch # run tests in watch mode
 | 017 | [Integer to Roman](#017-integer-to-roman) | Medium | Greedy (subtract largest first) | [Code](src/017-integer-to-roman/integer-to-roman.ts) |
 | 018 | [Length of Last Word](#018-length-of-last-word) | Easy | String Split (trim + split) | [Code](src/018-length-of-last-word/length-of-last-word.ts) |
 | 019 | [Longest Common Prefix](#019-longest-common-prefix) | Easy | Vertical Scan | [Code](src/019-longest-common-prefix/longest-common-prefix.ts) |
+| 020 | [Reverse Words in a String](#020-reverse-words-in-a-string) | Medium | Two Pointers / Built-in Reverse | [Code](src/020-reverse-words-in-a-string/reverse-words-in-a-string.ts) |
 
 ---
 
@@ -742,3 +743,42 @@ const longestCommonPrefix = (strs: string[]): string => {
 
 **Time complexity:** O(S) - where S is the sum of all characters in the common prefix across all strings.
 **Space complexity:** O(1) - only the prefix string (which is the output).
+
+---
+
+### 020. Reverse Words in a String
+
+Reverse the order of words in a string, trimming extra spaces.
+
+**Algorithm: Split + Reverse.** Split by spaces, filter empty strings (from multiple spaces), reverse the word array, join with single space. Two variants below - manual two-pointer swap vs built-in `.reverse()`. Both use the same algorithm (swap from both ends inward); `.reverse()` is native C++ in V8, so slightly faster.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+// Variant 1: Two Pointers (manual swap)
+const reverseWordsManual = (s: string): string => {
+  const words: string[] = s.trim().split(' ').filter((word) => word.length);
+
+  let left: number = 0;
+  let right: number = words.length - 1;
+
+  while (left < right) {
+    [words[left], words[right]] = [words[right], words[left]];
+    left++;
+    right--;
+  }
+
+  return words.join(' ');
+};
+
+// Variant 2: Built-in reverse (same algorithm, native implementation)
+const reverseWords = (s: string): string => {
+  return s.trim().split(/\s+/).reverse().join(' ');
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - split, reverse, and join each traverse the string/array once.
+**Space complexity:** O(n) - words array.
