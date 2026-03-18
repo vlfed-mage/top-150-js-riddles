@@ -30,6 +30,7 @@ npm run test:watch # run tests in watch mode
 | 015 | [Trapping Rain Water](#015-trapping-rain-water) | Hard | Two Pointers (squeeze inward) | [Code](src/015-trapping-rain-water/trapping-rain-water.ts) |
 | 016 | [Roman to Integer](#016-roman-to-integer) | Easy | Linear Scan (look ahead) | [Code](src/016-roman-to-integer/roman-to-integer.ts) |
 | 017 | [Integer to Roman](#017-integer-to-roman) | Medium | Greedy (subtract largest first) | [Code](src/017-integer-to-roman/integer-to-roman.ts) |
+| 018 | [Length of Last Word](#018-length-of-last-word) | Easy | String Split (trim + split) | [Code](src/018-length-of-last-word/length-of-last-word.ts) |
 
 ---
 
@@ -681,3 +682,26 @@ const intToRoman = (num: number): string => {
 
 **Time complexity:** O(1) - bounded by 3999 (max 15 iterations).
 **Space complexity:** O(1) - fixed-size lookup table.
+
+---
+
+### 018. Length of Last Word
+
+Return the length of the last word in a string of words and spaces.
+
+**Algorithm: String Split (trim + split).** Trim trailing spaces, split by space, return the length of the last element. Simple and readable. An alternative O(1) space approach would scan backwards from the end, skipping trailing spaces then counting non-space characters.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const lengthOfLastWord = (s: string): number => {
+  const words: string[] = s.trim().split(' ');
+  return words[words.length - 1].length;
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - trim and split traverse the string.
+**Space complexity:** O(n) - split creates an array of words.
