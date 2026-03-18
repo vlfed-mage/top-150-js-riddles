@@ -31,6 +31,7 @@ npm run test:watch # run tests in watch mode
 | 016 | [Roman to Integer](#016-roman-to-integer) | Easy | Linear Scan (look ahead) | [Code](src/016-roman-to-integer/roman-to-integer.ts) |
 | 017 | [Integer to Roman](#017-integer-to-roman) | Medium | Greedy (subtract largest first) | [Code](src/017-integer-to-roman/integer-to-roman.ts) |
 | 018 | [Length of Last Word](#018-length-of-last-word) | Easy | String Split (trim + split) | [Code](src/018-length-of-last-word/length-of-last-word.ts) |
+| 019 | [Longest Common Prefix](#019-longest-common-prefix) | Easy | Vertical Scan | [Code](src/019-longest-common-prefix/longest-common-prefix.ts) |
 
 ---
 
@@ -705,3 +706,39 @@ const lengthOfLastWord = (s: string): number => {
 
 **Time complexity:** O(n) - trim and split traverse the string.
 **Space complexity:** O(n) - split creates an array of words.
+
+---
+
+### 019. Longest Common Prefix
+
+Find the longest common prefix string amongst an array of strings.
+
+**Algorithm: Vertical Scan.** Use the first string as a reference and scan character by character (column by column). At each position `i`, check if all other strings have the same character at index `i`. Return immediately on the first mismatch or when any string runs out of characters. This is optimal because it only compares characters that are part of the common prefix - it stops as early as possible.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const longestCommonPrefix = (strs: string[]): string => {
+  let prefix: string = '';
+
+  for (let i: number = 0; i < strs[0].length; i++) {
+    const ch: string = strs[0][i];
+
+    for (let j: number = 1; j < strs.length; j++) {
+      if (i >= strs[j].length || strs[j][i] !== ch) {
+        return prefix;
+      }
+    }
+
+    prefix += ch;
+  }
+
+  return prefix;
+};
+```
+
+</details>
+
+**Time complexity:** O(S) - where S is the sum of all characters in the common prefix across all strings.
+**Space complexity:** O(1) - only the prefix string (which is the output).
