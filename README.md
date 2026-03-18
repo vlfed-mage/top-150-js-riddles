@@ -25,6 +25,8 @@ npm run test:watch # run tests in watch mode
 | 010 | [Jump Game II](#010-jump-game-ii) | Medium | Greedy (BFS-like level expansion) | [Code](src/010-jump-game-ii/jump-game-ii.ts) |
 | 011 | [H-Index](#011-h-index) | Medium | Counting Sort / Sorting + Scan | [Code](src/011-h-index/h-index.ts) |
 | 012 | [Product of Array Except Self](#012-product-of-array-except-self) | Medium | Prefix & Suffix Products | [Code](src/012-product-of-array-except-self/product-of-array-except-self.ts) |
+| 013 | [Gas Station](#013-gas-station) | Medium | Greedy (single pass with reset) | [Code](src/013-gas-station/gas-station.ts) |
+| 014 | [Candy](#014-candy) | Hard | Two Passes (left + right) | [Code](src/014-candy/candy.ts) |
 
 ---
 
@@ -369,7 +371,7 @@ Find the largest `h` such that at least `h` papers have `h` or more citations. T
 
 #### Variant 1: Counting Sort (O(n) time, O(n) space)
 
-**Algorithm: Counting Sort (bucket array).** Since h can only be `0..n`, create a bucket array of size `n+1`. For each citation, increment `buckets[min(citation, n)]` — values above `n` are capped because h can never exceed the total number of papers. Then scan from `h = n` down to `0`, accumulating bucket counts. The first `h` where `accumulated >= h` means at least `h` papers have `h+` citations — that's the answer.
+**Algorithm: Counting Sort (bucket array).** Since h can only be `0..n`, create a bucket array of size `n+1`. For each citation, increment `buckets[min(citation, n)]` - values above `n` are capped because h can never exceed the total number of papers. Then scan from `h = n` down to `0`, accumulating bucket counts. The first `h` where `accumulated >= h` means at least `h` papers have `h+` citations - that's the answer.
 
 <details>
 <summary>Solution</summary>
@@ -469,3 +471,77 @@ const productExceptSelf = (nums: number[]): number[] => {
 
 **Time complexity:** O(n) - two passes through the array.
 **Space complexity:** O(1) extra - output array stores prefix, suffix is one variable.
+
+---
+
+### 013. Gas Station
+
+Find the starting gas station index to complete a circular route, or return -1 if impossible.
+
+**Algorithm: Greedy (single pass with reset).** At each station compute `diff = gas[i] - cost[i]`. Track two sums: `total` (global sum of all diffs - if negative, no solution exists) and `tank` (current run from the candidate start). When `tank` goes negative at station `j`, no station from `start..j` can work - because you arrived at each with extra fuel and still ran out. So reset `start = j + 1` and `tank = 0`. After the loop, if `total >= 0`, `start` is the answer.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const canCompleteCircuit = (gas: number[], cost: number[]): number => {
+  let total: number = 0;
+  let tank: number = 0;
+  let start: number = 0;
+
+  for (let i: number = 0; i < gas.length; i++) {
+    const diff: number = gas[i] - cost[i];
+    total += diff;
+    tank += diff;
+
+    if (tank < 0) {
+      start = i + 1;
+      tank = 0;
+    }
+  }
+
+  return total >= 0 ? start : -1;
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - single pass through the arrays.
+**Space complexity:** O(1) - three variables only.
+
+---
+
+### 014. Candy
+
+Distribute minimum candies to children in a line so each child gets at least 1, and children with higher ratings than their neighbors get more candies.
+
+**Algorithm: Two Passes (left + right).** A single pass can't solve this because a child's candy count depends on both neighbors - the left chain (increasing) and the right chain (decreasing). Pass 1 (left-to-right): if `ratings[i] > ratings[i-1]`, give `candies[i-1] + 1` - this satisfies the left neighbor constraint. Pass 2 (right-to-left): if `ratings[i] > ratings[i+1]`, take `max(current, candies[i+1] + 1)` - this satisfies the right neighbor without breaking the left. The `max` ensures peaks get enough for both sides.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const candy = (ratings: number[]): number => {
+  const n: number = ratings.length;
+  const candies: number[] = new Array(n).fill(1);
+
+  for (let i: number = 1; i < n; i++) {
+    if (ratings[i] > ratings[i - 1]) {
+      candies[i] = candies[i - 1] + 1;
+    }
+  }
+
+  for (let i: number = n - 2; i >= 0; i--) {
+    if (ratings[i] > ratings[i + 1]) {
+      candies[i] = Math.max(candies[i], candies[i + 1] + 1);
+    }
+  }
+
+  return candies.reduce((sum, c) => sum + c, 0);
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - two passes through the array.
+**Space complexity:** O(n) - candies array.
