@@ -5,7 +5,7 @@
 //
 // Step 1: Fill buckets (index = citation count, capped at n)
 //   buckets[h] counts how many papers have exactly h citations
-//   index n (last) is special — it catches all citations >= n
+//   index n (last) is special - it catches all citations >= n
 //
 //   citations[0] = 3 → buckets[3]++  → [0, 0, 0, 1, 0, 0]
 //   citations[1] = 0 → buckets[0]++  → [1, 0, 0, 1, 0, 0]

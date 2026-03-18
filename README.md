@@ -27,6 +27,7 @@ npm run test:watch # run tests in watch mode
 | 012 | [Product of Array Except Self](#012-product-of-array-except-self) | Medium | Prefix & Suffix Products | [Code](src/012-product-of-array-except-self/product-of-array-except-self.ts) |
 | 013 | [Gas Station](#013-gas-station) | Medium | Greedy (single pass with reset) | [Code](src/013-gas-station/gas-station.ts) |
 | 014 | [Candy](#014-candy) | Hard | Two Passes (left + right) | [Code](src/014-candy/candy.ts) |
+| 015 | [Trapping Rain Water](#015-trapping-rain-water) | Hard | Two Pointers (squeeze inward) | [Code](src/015-trapping-rain-water/trapping-rain-water.ts) |
 
 ---
 
@@ -545,3 +546,43 @@ const candy = (ratings: number[]): number => {
 
 **Time complexity:** O(n) - two passes through the array.
 **Space complexity:** O(n) - candies array.
+
+---
+
+### 015. Trapping Rain Water
+
+Compute how much water can be trapped between bars of an elevation map.
+
+**Algorithm: Two Pointers (squeeze inward).** Water at any position = `min(maxLeft, maxRight) - height[i]`. Use two pointers `l` and `r` moving inward. Compare `height[l]` vs `height[r]` - the smaller side is the bottleneck, so process it: update its running max and add `max - height` as trapped water. The key insight: when `height[l] <= height[r]`, we know `maxRight >= height[r] >= height[l]`, so `maxLeft` alone determines the water level on the left side - we don't need to know the exact `maxRight`.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const trap = (height: number[]): number => {
+  let l: number = 0;
+  let r: number = height.length - 1;
+  let maxL: number = 0;
+  let maxR: number = 0;
+  let water: number = 0;
+
+  while (l < r) {
+    if (height[l] <= height[r]) {
+      maxL = Math.max(maxL, height[l]);
+      water += maxL - height[l];
+      l++;
+    } else {
+      maxR = Math.max(maxR, height[r]);
+      water += maxR - height[r];
+      r--;
+    }
+  }
+
+  return water;
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - single pass (both pointers traverse the array once).
+**Space complexity:** O(1) - four variables only.

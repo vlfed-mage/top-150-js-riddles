@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import maxProfitII from './best-time-to-buy-and-sell-stock-ii';
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('maxProfitII', () => {
   it('should return 7 for [7,1,5,3,6,4]', () => {
     expect(maxProfitII([7, 1, 5, 3, 6, 4])).toBe(7);

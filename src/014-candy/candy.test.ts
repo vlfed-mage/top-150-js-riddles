@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import candy from './candy';
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('candy', () => {
   it('should return 5 for [1,0,2]', () => {
     expect(candy([1, 0, 2])).toBe(5);

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import canCompleteCircuit from './gas-station';
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('canCompleteCircuit', () => {
   it('should return 3 for gas=[1,2,3,4,5] cost=[3,4,5,1,2]', () => {
     expect(canCompleteCircuit([1, 2, 3, 4, 5], [3, 4, 5, 1, 2])).toBe(3);

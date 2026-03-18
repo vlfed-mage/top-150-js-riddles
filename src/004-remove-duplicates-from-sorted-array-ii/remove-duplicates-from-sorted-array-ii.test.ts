@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import removeDuplicatesII from './remove-duplicates-from-sorted-array-ii';
 
-// in-place mutation — assert return value + modified array
+// in-place mutation - assert return value + modified array
 describe('removeDuplicatesII', () => {
   it('should allow at most two duplicates', () => {
     const nums: number[] = [1, 1, 1, 2, 2, 3];

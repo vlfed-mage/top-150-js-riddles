@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import productExceptSelf from './product-of-array-except-self';
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('productExceptSelf', () => {
   it('should return [24,12,8,6] for [1,2,3,4]', () => {
     expect(productExceptSelf([1, 2, 3, 4])).toEqual([24, 12, 8, 6]);

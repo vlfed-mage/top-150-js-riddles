@@ -13,7 +13,7 @@ const testCases: { input: number[]; expected: number }[] = [
   { input: [25, 8, 5, 3, 3], expected: 3 },
 ];
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('hIndex (counting sort)', () => {
   testCases.forEach(({ input, expected }) => {
     it(`should return ${expected} for [${input}]`, () => {
@@ -22,7 +22,7 @@ describe('hIndex (counting sort)', () => {
   });
 });
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('hIndexSort (sort + scan)', () => {
   testCases.forEach(({ input, expected }) => {
     it(`should return ${expected} for [${input}]`, () => {

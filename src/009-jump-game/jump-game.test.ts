@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import canJump from './jump-game';
 
-// pure return value — assert the result directly
+// pure return value - assert the result directly
 describe('canJump', () => {
   it('should return true for [2,3,1,1,4]', () => {
     expect(canJump([2, 3, 1, 1, 4])).toBe(true);

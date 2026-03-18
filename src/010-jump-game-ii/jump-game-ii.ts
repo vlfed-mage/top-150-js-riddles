@@ -1,5 +1,5 @@
 // Greedy (BFS-like level expansion)
-// Treats the array as BFS levels — each "level" is one jump.
+// Treats the array as BFS levels - each "level" is one jump.
 // currentEnd marks the boundary of the current level.
 // When i reaches currentEnd, all positions in this level are explored,
 // so we expand to the next level (currentEnd = maxReach) and increment jumps.
