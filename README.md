@@ -28,6 +28,8 @@ npm run test:watch # run tests in watch mode
 | 013 | [Gas Station](#013-gas-station) | Medium | Greedy (single pass with reset) | [Code](src/013-gas-station/gas-station.ts) |
 | 014 | [Candy](#014-candy) | Hard | Two Passes (left + right) | [Code](src/014-candy/candy.ts) |
 | 015 | [Trapping Rain Water](#015-trapping-rain-water) | Hard | Two Pointers (squeeze inward) | [Code](src/015-trapping-rain-water/trapping-rain-water.ts) |
+| 016 | [Roman to Integer](#016-roman-to-integer) | Easy | Linear Scan (look ahead) | [Code](src/016-roman-to-integer/roman-to-integer.ts) |
+| 017 | [Integer to Roman](#017-integer-to-roman) | Medium | Greedy (subtract largest first) | [Code](src/017-integer-to-roman/integer-to-roman.ts) |
 
 ---
 
@@ -586,3 +588,96 @@ const trap = (height: number[]): number => {
 
 **Time complexity:** O(n) - single pass (both pointers traverse the array once).
 **Space complexity:** O(1) - four variables only.
+
+---
+
+### 016. Roman to Integer
+
+Convert a Roman numeral string to an integer.
+
+**Algorithm: Linear Scan (look ahead).** Scan left to right. At each position, compare the current symbol's value with the next one. If current < next, it's a subtraction case (e.g., `I` before `V` = 4), so subtract the current value. Otherwise, add it. This works because subtraction pairs like `IV`, `IX`, `XL`, `XC`, `CD`, `CM` always have the smaller value first - subtracting then adding the larger gives the correct result (e.g., -1 + 5 = 4).
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const ROMAN_VALUES: ReadonlyMap<string, number> = new Map([
+  ['I', 1],
+  ['V', 5],
+  ['X', 10],
+  ['L', 50],
+  ['C', 100],
+  ['D', 500],
+  ['M', 1000],
+]);
+
+const romanToInt = (s: string): number => {
+  let output: number = 0;
+
+  for (let i: number = 0; i < s.length; i++) {
+    const current: number = ROMAN_VALUES.get(s[i])!;
+    const next: number = ROMAN_VALUES.get(s[i + 1]) ?? 0;
+
+    if (current < next) {
+      output -= current;
+    } else {
+      output += current;
+    }
+  }
+
+  return output;
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - single pass through the string.
+**Space complexity:** O(1) - fixed-size map of 7 symbols.
+
+---
+
+### 017. Integer to Roman
+
+Convert an integer to a Roman numeral string.
+
+**Algorithm: Greedy (subtract largest first).** Define all 13 value-symbol pairs (including subtractive forms like 900=CM, 400=CD, etc.) sorted descending. Iterate through the pairs: while the remaining number is >= the current value, append the symbol and subtract the value. The greedy choice works because Roman numerals are designed so that the largest applicable symbol always comes first.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const VALUES: readonly [number, string][] = [
+  [1000, 'M'],
+  [900, 'CM'],
+  [500, 'D'],
+  [400, 'CD'],
+  [100, 'C'],
+  [90, 'XC'],
+  [50, 'L'],
+  [40, 'XL'],
+  [10, 'X'],
+  [9, 'IX'],
+  [5, 'V'],
+  [4, 'IV'],
+  [1, 'I'],
+] as const;
+
+const intToRoman = (num: number): string => {
+  let result: string = '';
+  let remaining: number = num;
+
+  for (const [value, symbol] of VALUES) {
+    while (remaining >= value) {
+      result += symbol;
+      remaining -= value;
+    }
+  }
+
+  return result;
+};
+```
+
+</details>
+
+**Time complexity:** O(1) - bounded by 3999 (max 15 iterations).
+**Space complexity:** O(1) - fixed-size lookup table.
