@@ -33,6 +33,7 @@ npm run test:watch # run tests in watch mode
 | 018 | [Length of Last Word](#018-length-of-last-word) | Easy | String Split (trim + split) | [Code](src/018-length-of-last-word/length-of-last-word.ts) |
 | 019 | [Longest Common Prefix](#019-longest-common-prefix) | Easy | Vertical Scan | [Code](src/019-longest-common-prefix/longest-common-prefix.ts) |
 | 020 | [Reverse Words in a String](#020-reverse-words-in-a-string) | Medium | Two Pointers / Built-in Reverse | [Code](src/020-reverse-words-in-a-string/reverse-words-in-a-string.ts) |
+| 021 | [Zigzag Conversion](#021-zigzag-conversion) | Medium | Row Simulation (bounce) | [Code](src/021-zigzag-conversion/zigzag-conversion.ts) |
 
 ---
 
@@ -782,3 +783,45 @@ const reverseWords = (s: string): string => {
 
 **Time complexity:** O(n) - split, reverse, and join each traverse the string/array once.
 **Space complexity:** O(n) - words array.
+
+---
+
+### 021. Zigzag Conversion
+
+Write a string in zigzag pattern across `numRows` rows, then read line by line.
+
+**Algorithm: Row Simulation (bounce).** Create an array of `numRows` empty strings. Walk through the input character by character, appending each to the current row. A `step` variable (+1 or -1) controls direction — when you hit the bottom row, bounce up; when you hit the top row, bounce down. After processing all characters, concatenate all rows. Early return for `numRows === 1` since no zigzag occurs.
+
+<details>
+<summary>Solution</summary>
+
+```typescript
+const zigzagConvert = (s: string, numRows: number): string => {
+  if (numRows === 1) {
+    return s;
+  }
+
+  const rows: string[] = new Array(numRows).fill('');
+  let row: number = 0;
+  let step: number = 1;
+
+  for (let i: number = 0; i < s.length; i++) {
+    rows[row] += s[i];
+
+    if (row === numRows - 1) {
+      step = -1;
+    } else if (row === 0) {
+      step = 1;
+    }
+
+    row += step;
+  }
+
+  return rows.join('');
+};
+```
+
+</details>
+
+**Time complexity:** O(n) - single pass through the string.
+**Space complexity:** O(n) - rows array stores all characters.
